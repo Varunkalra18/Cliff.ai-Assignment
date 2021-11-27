@@ -1,7 +1,4 @@
 import './App.css';
-import {useState} from "react"
-import Pagination from "@material-ui/lab/Pagination"
-import { DataGrid } from '@material-ui/data-grid';
 import { metrics } from './assignment_data/metrics';
 import Metric from './components/Metric';
 import Graph from "./components/Graph"
