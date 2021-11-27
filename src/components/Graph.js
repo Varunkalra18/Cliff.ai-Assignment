@@ -40,7 +40,7 @@ function Graph(props) {
     //   anomaly.push(an.line_status)
     // })
     jso.map((dat)=>{
-        if(dat.line_status !== "0" && dat.line_status !== null)
+        if(dat.line_status != "0" && dat.line_status != null)
         {
           anomaly.push(dat.original_value)
         }
