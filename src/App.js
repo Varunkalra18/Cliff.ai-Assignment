@@ -1,5 +1,6 @@
 import './App.css';
 import { metrics } from './assignment_data/metrics';
+import {useState} from "react"
 import Metric from './components/Metric';
 import Graph from "./components/Graph"
 import {data22} from "./assignment_data/60508885da4c96019c357c19_f79e329cf4d13e3613d5a690ef19bfe9"
@@ -30,34 +31,43 @@ import {data14} from "./assignment_data/60508885da4c96019c357c19_a5c2d035e7be4bf
 function App() {
   var daArr = [data22,data19,data6,data11,data13,data9,data3,data8,data1,data10,data16,data4,data18,data23,data0,data2,data7,data12,
   data17,data15,data5,data21,data20,data14]
- var count= 0 
+  var [count,setCount]= useState(0)
+  const onChange = ()=>{
+    if(count +1 < 24)
+    {
+      setCount(count + 1)
+    }     
+  } 
+  const onPrev = ()=>{
+    if(count -1 >= 0)
+    {
+      setCount(count - 1)
+    }   
+  } 
   return (
-
-    <div className="App">
-        
-        {metrics.map((met)=>{
-          return(
-            
-          <div className="">
-            <div className="row p-5">
-              <div className="col-4">
-                <Metric _id = {met._id} measure = {met.measure} dimension={met.dimensions}/>
-              </div>
-              
-              <div className="col-8">                
-                <div className="container bg-dark"><Graph  _id = {met._id} jso = {daArr[count]}/>{count++}</div>
-              </div>
-            </div>
-            <hr/> 
+    <div className="App">            
+      <div className="container-fluid">
+        <div className="row p-5">
+          <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <Metric _id = {metrics[count]._id} measure = {metrics[count].measure} dimension={metrics[count].dimensions}/>
+          </div>      
+          <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">                
+            <div className="container bg-dark"><Graph  _id = {metrics[count]._id} jso = {daArr[count]}/></div>
           </div>
-          
-          )
-          
-        })}
-    
-      
+        </div>
+        <hr/> 
+        <div class="conainter-fluid">
+          <div class="row">
+            <div class="col-6 text-start">
+              <button class="btn btn-primary justify-content-start" onClick={onPrev} disabled={count==0}>Previous</button>
+            </div>
+            <div class="col-6 text-end">
+              <button class="btn btn-primary justify-content-end" onClick={onChange} disabled={count==23}>Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
-
 export default App;

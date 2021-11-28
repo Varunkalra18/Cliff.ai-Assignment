@@ -29,7 +29,8 @@ import {data14} from "../assignment_data/60508885da4c96019c357c19_a5c2d035e7be4b
 
 function Graph(props) {
     const {_id , jso} = props
-    console.log(jso)
+    var daAr = [data22,data19,data6,data11,data13,data9,data3,data8,data1,data10,data16,data4,data18,data23,data0,data2,data7,data12,
+      data17,data15,data5,data21,data20,data14]
     var or =[]
     var min_band =[]
     var max_band = []
@@ -39,16 +40,21 @@ function Graph(props) {
     // datas.map((an)=>{
     //   anomaly.push(an.line_status)
     // })
-    jso.map((dat)=>{
-        if(dat.line_status != "0" && dat.line_status != null)
+    var ind = 0 ;
+    jso.map((dat,ind,elements)=>{
+        var next = []
+        if(dat.line_status == "1" || dat.line_status == "2" || dat.line_status == "3")
         {
-          anomaly.push(dat.original_value)
+            anomaly.push(dat.original_value)
+            
         }
         else{
           anomaly.push(null)
+          
         }
         or.push(dat.original_value)
-        time.push(dat.timestamp)
+        
+        time.push("")
     })
     jso.map((dat)=>{
       min_band.push(dat.min_band)
@@ -59,9 +65,7 @@ function Graph(props) {
     jso.map((dat)=>{
       forcasted.push(dat.forecasted_value)
     })
-    //console.log(or)
     
-    const labels = ["Jan", "Feb", "March", "April", "May" , "June", "July"]
     const data = {
       labels:time,
       datasets: [
@@ -116,6 +120,19 @@ function Graph(props) {
     ]
     };
     const options = {
+      legend: {
+        display:true
+      },
+      title:{
+        text:"time"
+      },
+      tooltips: {
+        callbacks: {
+           label: function(tooltipItem) {
+                  return tooltipItem.yLabel;
+           }
+        }
+      } ,
         scales:{
             yAxes:[
                 {
@@ -123,12 +140,19 @@ function Graph(props) {
                         beginAtZero:true,
                     }
                 }
+            ],
+            xAxes:[{
+              scaleLabel: {
+                display: false,
+                labelString: 'X text'
+              }
+            }
             ]
         }
       };
     return (
         <div className="chart">
-          <Line data={data} option={options}/>
+          <Line data={data} option={options} title={{text:"time"}}/>
           <p class="small">Id: {_id}</p>            
         </div>
     )
